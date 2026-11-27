@@ -1,0 +1,35 @@
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: #f2f2f2; font-family: system-ui, sans-serif; color: #0d0d0f; }
+main { width: min(810px, calc(100% - 32px)); margin: 60px auto; }
+h1 { margin: 0 0 20px; font-size: 24px; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+button { padding: 8px 12px; border: 1px solid #d8d8dd; border-radius: 8px; background: #fff; font: inherit; cursor: pointer; }
+.recommendation-title { font-weight: 500; }
+.recommendation-message { font-weight: 400; }
+.demo-mark { position: relative; z-index: 1; flex: 0 0 40px; width: 40px; height: 40px; color: #9a80ff; font-size: 34px; text-align: center; line-height: 40px; }
+.recommendation-card { position: relative; isolation: isolate; flex: none; padding: 24px; display: flex; gap: 16px; align-items: flex-start; overflow: hidden; border: 2px solid #fff; border-radius: 32px; background: linear-gradient(180deg,rgba(190,174,255,.1) 0%,rgba(127,95,255,0) 50%,rgba(127,95,255,0) 100%),#fff; box-shadow: none; }
+.recommendation-card.skeleton-recommendation { background: #fff; }
+.skeleton-recommendation .recommendation-animated { visibility: hidden; }
+.skeleton-recommendation .recommendation-letter { animation: none; }
+.recommendation-dust { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none; }
+.recommendation-copy { position: relative; z-index: 1; min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.recommendation-copy > span { color: #0d0d0f; font-size: 14px; line-height: 18px; letter-spacing: 0; font-feature-settings: "lnum" 1,"pnum" 1; }
+.recommendation-animated-visual { display: flex; flex-wrap: wrap; align-items: baseline; }
+.recommendation-word { display: inline-flex; white-space: nowrap; }
+.recommendation-letter { display: inline-block; transform-origin: 50% 100%; animation: recommendation-letter-tilt 320ms cubic-bezier(.16,1,.3,1) both var(--letter-delay),recommendation-letter-color 270ms cubic-bezier(.22,1,.36,1) both var(--letter-delay); }
+@keyframes recommendation-letter-tilt {
+ 0% { opacity: 0; filter: blur(4px); transform: perspective(600px) translateY(8px) rotateX(-24deg); }
+ 55% { opacity: .95; filter: blur(.6px); transform: perspective(600px) translateY(-.6px) rotateX(4deg); animation-timing-function: cubic-bezier(.42,0,.58,1); }
+ 100% { opacity: 1; filter: blur(0); transform: perspective(600px) translateY(0) rotateX(0); }
+}
+@keyframes recommendation-letter-color { from { color: #ff5a36; } to { color: #0d0d0f; } }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+@media (prefers-reduced-motion: reduce) {
+  .recommendation-letter { animation: none; opacity: 1; filter: none; color: inherit; transform: none; }
+  .skeleton-block::after { animation: none; display: none; }
+}
+.skeleton-block { position: relative; display: block; flex-shrink: 0; max-width: 100%; overflow: hidden; border-radius: 8px; background: #f1f1f3; }
+.skeleton-block::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg,transparent,rgba(255,255,255,.78),transparent); animation: skeleton-shimmer 1.3s ease-in-out infinite; }
+@keyframes skeleton-shimmer { to { transform: translateX(100%); } }
+.skeleton-recommendation .skeleton-icon { border-radius: 12px; }
+.skeleton-copy { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
